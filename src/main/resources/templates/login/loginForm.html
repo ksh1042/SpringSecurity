@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+<body>
+  <div>
+    <h1>Login Page</h1>
+    <hr>
+    <form action="/login" method="POST">
+      <!-- name을 username으로 지정하지 않는다면 로그인시 스프링 시큐리티의 UserDetailsService에서 캐치하지 못한다. -->
+      <!-- name을 다른 이름으로 바꾸고 싶다면 시큐리티 설정에서 userNameParameter() 메서드를 통해 재정의 해주어야 한다. -->
+      <input type="text" name="username" placeholder="login">
+      <input type="password" name="password" placeholder="password">
+      <button>Login</button>
+    </form>
+  </div>
+</body>
+</html>
