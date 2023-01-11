@@ -1,19 +1,26 @@
 package com.roman14.security;
 
+import com.roman14.security.controller.LoginController;
 import com.roman14.security.entity.Member;
 import com.roman14.security.entity.enume.Role;
 import com.roman14.security.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.lang.annotation.Annotation;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 @RequiredArgsConstructor
+@Slf4j
 public class SpringSecurityApplication
 {
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -34,6 +41,7 @@ public class SpringSecurityApplication
 
   private void init()
   {
+    log.info("init() add members to db");
     Member member1 = getMember("user01", bCryptPasswordEncoder.encode("user01"), Role.ROLE_ADMIN);
     Member member2 = getMember("user02", bCryptPasswordEncoder.encode("user02"), Role.ROLE_MANAGER);
     Member member3 = getMember("user03", bCryptPasswordEncoder.encode("user03"), Role.ROLE_USER);

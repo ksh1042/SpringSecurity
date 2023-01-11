@@ -1,5 +1,6 @@
 package com.roman14.security.controller;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +37,12 @@ public class HomeController
   public String manager()
   {
     return "admin";
+  }
+
+  @Secured("ROLE_ADMIN")
+  @GetMapping("/info")
+  public String info()
+  {
+    return "user info";
   }
 }
