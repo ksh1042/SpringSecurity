@@ -206,3 +206,55 @@ public class PrincipalDetailsService implements UserDetailsService
 >&nbsp;&nbsp;&nbsp;&nbsp;ㄴ spring security UserDetails
 
 ---
+
+## 4. OAuth2 연동
+### 4.1. Spring Security OAuth2 Client 라이브러리 의존성 추가
+```groovy
+dependencies {
+  implementation 'org.springframework.security:spring-security-oauth2-client'
+}
+```
+> ※ OAuth2 연동할 사이트에 승인된 리디렉션 URI은 반드시 OAuth2 Client 에서 정해져 있는 URI를 사용하여야 한다. {baseUrl}/{action}/oauth2/code/{registrationId}<br>
+> ex) OAuth2 연동할 사이트에 승인된 리디렉션 URI = http://localhost:8080/login/oauth2/code/facebook
+
+### 4.2. 설정 및 OAuth2 로그인
+- [스프링부트 시큐리티 6강 - 구글 로그인 준비](https://youtu.be/9ui2i-SgBpk) 영상을 참고하여 구글 OAuth2 생성
+- OAuth2 클라이언트 ID 생성 후 발급되는 클라이언트 ID와 Secret을 기록
+- 다른 부분은 공개되어도 괜찮으나 Secret Key 만큼은 공개되어서는 안되니 주의
+```yaml
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: { google-oauth2-client-id }
+            client-secret: { google-oauth2-client-secret }
+            scope:
+              - email
+              - profile
+```
+```html
+<html>
+  <!-- 로그인 URI도 OAuth2 Client 에서 정해져있는 URI를 사용해야 한다. -->
+  <a href="/oauth2/authorization/google">Login from Google</a>
+</html>
+```
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig
+{
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception
+  {
+    return security
+      .oauth2Login(oauth2 -> {
+        oauth2.loginPage("/login/form").permitAll(); // 로그인 페이지 설정을 안해주면 404 Error 발생
+      })
+      .build();
+  }
+}
+```
+> ※ 구글의 경우 로그인 완료시 AccessToken, 사용자 프로필 정보를 받아온다.
+---
