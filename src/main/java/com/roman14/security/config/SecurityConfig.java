@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity  // 스프링 시큐리티 필터가 스프링 필터체인에 등록되도록 하는 어노테이션
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig
 {
   @Bean
@@ -32,7 +32,7 @@ public class SecurityConfig
         .anyRequest().permitAll()
       )
       .formLogin(login -> login
-        .loginPage("/loginForm").permitAll()
+        .loginPage("/login/form").permitAll()
         .loginProcessingUrl("/login")
         .defaultSuccessUrl("/")
       )

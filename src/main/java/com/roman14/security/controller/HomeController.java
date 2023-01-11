@@ -1,6 +1,7 @@
 package com.roman14.security.controller;
 
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,10 +40,17 @@ public class HomeController
     return "admin";
   }
 
-  @Secured("ROLE_ADMIN")
+  @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
   @GetMapping("/info")
   public String info()
   {
     return "user info";
+  }
+
+  @PreAuthorize("hasRole('ROLE_MANAGER') and hasRole('ROLE_ADMIN')")
+  @GetMapping("/data")
+  public String data()
+  {
+    return "data";
   }
 }

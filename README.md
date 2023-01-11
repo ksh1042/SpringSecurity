@@ -49,8 +49,8 @@ public class SecurityConfig
 - ```@EnableGlobalMethodSecurity``` 엔드포인트 메서드별로 임의의 접근제한을 부여하고 싶을때에 사용하는 어노테이션
 > - 옵션<br>
 > ```securedEnabled``` = ```@Secured``` 어노테이션 사용가능 여부<br>
-> ```prePostEnabled``` = ```@PreAuthorize``` 어노테이션 사용가능 여부<br>
-> ※ 특정 메서드에 하나의 ```ROLE```로 접근을 제한하고 싶다면 ```@Secured``` 어노테이션을, 여러 ```ROLE```로 접근을 제한을 하고 싶다면 ```@PreAuthroize``` 어노테이션을 이용한다.<br>
+> ```prePostEnabled``` = ```@PreAuthorize``` 어노테이션 사용가능 여부. (```AspectJ```의 ```@Around``` 개념)<br>
+> ※ 특정 메서드에 ```ROLE```로 접근을 제한하고 싶다면 ```@Secured(String [])``` 어노테이션을, 여러 ```ROLE```을 논리조합을 통해 접근을 제한을 하고 싶다면 ```@PreAuthroize``` 어노테이션을 이용한다.<br>
 > ※ ex) ```@Secured("ROLE_USER")```<br>
 > ※ ex) ```@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")```
 ```java
