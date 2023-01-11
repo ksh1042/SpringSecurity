@@ -46,18 +46,30 @@ public class SecurityConfig
 ```
 
 ### 2.3. EnableGlobalMethodSecurity
-- ```@EnableGlobalMethodSecurity```엔드포인트 메서드별로 임의의 접근제한을 부여하고 싶을때에 사용하는 어노테이션
-- 접근을 제한하고 싶은 메서드에 ```@Secure(ROLE)``` 어노테이션을 부여하여 접근을 제한한다.
+- ```@EnableGlobalMethodSecurity``` 엔드포인트 메서드별로 임의의 접근제한을 부여하고 싶을때에 사용하는 어노테이션
+> - 옵션<br>
+> ```securedEnabled``` = ```@Secured``` 어노테이션 사용가능 여부<br>
+> ```prePostEnabled``` = ```@PreAuthorize``` 어노테이션 사용가능 여부<br>
+> ※ 특정 메서드에 하나의 ```ROLE```로 접근을 제한하고 싶다면 ```@Secured``` 어노테이션을, 여러 ```ROLE```로 접근을 제한을 하고 싶다면 ```@PreAuthroize``` 어노테이션을 이용한다.<br>
+> ※ ex) ```@Secured("ROLE_USER")```<br>
+> ※ ex) ```@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")```
 ```java
 @Configuration
 @EnableWebSecurity  // 스프링 시큐리티 필터가 스프링 필터체인에 등록되도록 하는 어노테이션
-@EnableGlobalMethodSecurity(securedEnabled = true)
-public class SecurityConfig{}
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+public class SecurityConfig
+{
+  // Spring Security Settings...
+}
 
 @Controller
 public class ManagerController
 {
   @Secured("ROLE_MANAGER")
+  @GetMapping("/")
+  public String manage() { return null; }
+
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
   @GetMapping("/")
   public String manage() { return null; }
 }
