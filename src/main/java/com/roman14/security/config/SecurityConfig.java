@@ -1,6 +1,6 @@
 package com.roman14.security.config;
 
-import com.roman14.security.oauth2.PrincipalOauth2UserService;
+import com.roman14.security.oauth2.PrincipalOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig
 {
-  private final PrincipalOauth2UserService principalOauth2UserService;
+  private final PrincipalOAuth2UserService principalOauth2UserService;
 
   @Bean
   public BCryptPasswordEncoder bCryptPasswordEncoder()

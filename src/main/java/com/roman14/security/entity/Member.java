@@ -26,10 +26,19 @@ public class Member
 
   private LocalDateTime addTime;
 
+  // OAuth2
+  private String provider;
+
+  // OAuth2
+  private String providerId;
+
+  // from UserDetails
   private boolean isExpired;
 
+  // from UserDetails
   private boolean isEnabled;
 
+  // from UserDetails
   private boolean isLocked;
 
   protected Member() {}

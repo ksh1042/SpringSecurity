@@ -57,4 +57,17 @@ public class PrincipalDetails implements UserDetails
   {
     return member.isEnabled();
   }
+
+  public Member getMember()
+  {
+    return member;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "PrincipalDetails{" +
+      "member=" + member +
+      '}';
+  }
 }

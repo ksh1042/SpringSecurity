@@ -257,4 +257,36 @@ public class SecurityConfig
 }
 ```
 > ※ 구글의 경우 로그인 완료시 AccessToken, 사용자 프로필 정보를 받아온다.
+
+### 4.3. Controller에서 OAuth2 로그인 정보 받기
+#### 4.3.1. ```Authentication.getPrincipal()```메서드를 이용
+- 일반적으로 getPrincipal()의 인스턴스 타입은 UserDetails(PrincipalDetails)를 받으나, OAuth2를 통해 로그인을 했을 경우 OAuth2User(DefaultOAuth2User) 타입을 받는다.
+```java
+@Controller
+@RequestMapping("/members")
+public class MemberController
+{
+  @GetMapping("/info")
+  public String info(Authentication authentication)
+  {
+    authentication.getPrincipal(); // OAuth2 로그인 시 DefaultOAuth2User 를 반환한다.
+    return "members/memberDetails";
+  }
+}
+```
+
+#### 4.3.2. ```@AuthenticationPrincipal``` 어노테이션을 이용
+ 
+```java
+@Controller
+@RequestMapping("/members")
+public class MemberController
+{
+  @GetMapping("/info")
+  public String info(@AuthenticationPrincopal OAuth2User oAuth2User)
+  {
+    return "members/memberDetails";
+  }
+}
+```
 ---
